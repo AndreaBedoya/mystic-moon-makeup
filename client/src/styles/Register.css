@@ -1,0 +1,62 @@
+.register-container {
+  display: flex;
+  min-height: 100vh;
+  background: url("../assets/starsBackground.png") no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+}
+
+.register-left {
+  flex: 1;
+  text-align: center;
+  padding: 40px;
+}
+
+.register-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.register-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 400px;
+}
+
+.register-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.register-form button {
+  width: 100%;
+  padding: 12px;
+  background: #6a5acd; /* tono místico violeta */
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.register-links a {
+  color: #d8bfd8; /* lavanda suave */
+  text-decoration: none;
+}
+.register-links a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+.home {
+  background-image: url('../assets/starsBackground.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.catalogo {
+  margin: 0 30px;
+  font-family: "Cinzel Decorative";
+  font-size: 1.3rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas por defecto */
+  gap: 20px;
+}
+
+/* ----------------------------------------------------------------------- */
+/* Para pantallas grandes (monitores) */
+/* ------------------------------------------------------------------------- */
+@media (min-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en monitores grandes */
+  }
+}
+
