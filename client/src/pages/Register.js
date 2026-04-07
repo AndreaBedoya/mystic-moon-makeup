@@ -5,9 +5,9 @@ function Register() {
   return (
     <div className="register-container">
       <div className="register-left">
-        <img src="/logo.png" alt="Mystic Moon Makeup" className="register-logo" />
         <h2>Únete a</h2>
         <h1>Mystic Moon Makeup</h1>
+        <img src="/logo.png" alt="Mystic Moon Makeup" className="register-logo" />
       </div>
       <div className="register-right">
         <form className="register-form">
@@ -22,10 +22,12 @@ function Register() {
 
           <button type="submit">Registrarse</button>
 
-          <div className="register-links">
-            <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
-          </div>
         </form>
+
+        {/* Bloque azul oscuro separado */}
+        <div className="register-box">
+          <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,75 @@
+.sidebar {
+  background-image: url('../assets/starsBackground.png');
+  width: 250px;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: 1.5rem;
+  margin-bottom: 30%;
+  text-align: center;
+  color: #fff;
+}
+
+.sidebar-content {
+  flex: 1;                     /* ocupa todo el alto */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.sidebar-menu,
+.sidebar-bottom {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu button{
+  width: 94%;
+  margin: 15px 0;
+  cursor: pointer;
+  background-color: rgba(4, 12, 83, 0.384);
+  border: 2px solid #86A9CE;
+  border-radius: 10px;
+  padding: 10px 40px;
+  color: white;
+  font-size: 1.3rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-bottom button {
+  width: 94%;
+  margin: 10px 0;
+  cursor: pointer;
+  background-color: rgba(4, 12, 83, 0.384);
+  border: 2px solid #86A9CE;
+  border-radius: 10px;
+  padding: 10px 40px;
+  color: white;
+  font-size: 1.3rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu button:hover,
+.sidebar-bottom button:hover {
+  color: #86A9CE;
+}
+
+.icon {
+  font-size: 1.6rem;
+}

@@ -23,7 +23,7 @@ function Login() {
             <a href="#">¿Olvidaste tu contraseña?</a>
           </div>
         </form>
-        <div className="register-box">
+        <div className="login-box">
           <a href="/register">¿No tienes cuenta? Regístrate aquí</a>
         </div>
       </div>

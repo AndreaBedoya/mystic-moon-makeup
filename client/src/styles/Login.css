@@ -131,7 +131,7 @@
   text-decoration: underline;
 }
 
-.register-box {
+.login-box {
   width: 100%;
   max-width: 400px;
   background: #0B0E19;          
@@ -142,14 +142,14 @@
   text-align: center;
 }
 
-.register-box a {
+.login-box a {
   color: #fff;
   font-size: 1rem;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.register-box a:hover {
+.login-box a:hover {
   color: #86A9CE;
   text-decoration: underline;
 }
