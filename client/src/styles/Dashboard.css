@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    background: linear-gradient(135deg, #0d1831, #1c2a45);
-    color: #fff;
+    background: linear-gradient(135deg, #0D1831, #142849);
+    color: #000;
 }
 
 .dashboard-main {
@@ -14,4 +16,9 @@
 .dashboard-content {
     flex: 1;
     padding: 30px;
+    color: #fff;
+}
+.dashboard-content h1{
+    font-family: "Cinzel Decorative";
+
 }

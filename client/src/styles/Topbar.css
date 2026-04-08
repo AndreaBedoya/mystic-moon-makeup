@@ -2,25 +2,37 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0d1831c0;
-  border-bottom: 2px solid #86A9CE;
-  padding: 10px 20px;
+  background: transparent;
+  padding: 10px;
 }
 
 .search-input {
-  padding: 8px;
-  border-radius: 6px;
-  border: 2px solid #86A9CE;
+  padding: 10px 40px;
+  border-radius: 50px;
+  border: 3px solid #fff;
   background: transparent;
-  color: #fff;
-  outline: none;
+  margin: 10px 0;
+  width: 80%;
+  font-size: 1.4rem;
 }
 
 .search-input::placeholder {
-  color: #b0c4de;
+  color: #fff;
 }
 
 .topbar-icons {
-  font-size: 1.2rem;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.icon {
+  font-size: 1.5rem;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #6c8cff;
 }

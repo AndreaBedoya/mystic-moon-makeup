@@ -1,105 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
-
 .edit-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  min-height: 100vh;
-  background: url("../assets/starsBackground.png") no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  font-family: "Open Sans", sans-serif;
+  padding: 20px;
+  color: white;
 }
 
-/* Columna izquierda */
-.edit-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.edit-title {
+  font-size: 1.8rem;
+  margin-bottom: 50px;
   text-align: center;
-  padding: 40px;
-}
-
-.edit-left h2 {
-  font-family: "Cinzel Decorative", cursive;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.edit-image {
-  width: 250px;
-  border-radius: 12px;
-  border: 3px solid #86A9CE;
-}
-
-/* Columna derecha */
-.edit-right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Formulario */
-.edit-form {
-  background: #0d1831c0;
-  border: 3px solid #86A9CE;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 450px;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.edit-form label {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.edit-form input,
-.edit-form textarea {
-  padding: 10px;
-  border: 2px solid #86A9CE;
-  background: transparent;
-  border-radius: 8px;
   color: #fff;
-  outline: none;
-  transition: box-shadow 0.3s ease;
+  font-family: "Cinzel Decorative";
 }
 
-.edit-form input:focus,
-.edit-form textarea:focus {
-  box-shadow: 0 0 8px #836fff;
+.crud-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
 }
 
-.edit-form textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-/* Botón */
-.edit-form button {
-  align-self: center;
-  width: 60%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #86A9CE;
-  border: none;
-  border-radius: 50px;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
+.crud-card {
+  background: linear-gradient(135deg, #0D1831, #142849);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  box-shadow: 0 0 10px rgba(108, 140, 255, 0.6);
+  font-family: "Opens Sans", sans-serif;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.edit-form button:hover {
-  background: linear-gradient(135deg, #6f91ff, #5a75cd);
-  transform: scale(1.03);
+.crud-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.crud-card h3 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 1.4rem ;
+}
+
+.crud-card p {
+  font-size: 0.9rem;
+  color: #d0d6e0;
+  font-family: "Opens Sans", sans-serif;
+  font-size: 1rem ;
 }
