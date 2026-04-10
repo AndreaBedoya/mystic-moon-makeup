@@ -1,0 +1,94 @@
+.crud-view-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+  font-family: "Cinzel Decorative", serif;
+  text-shadow: 0 0 8px rgba(108, 140, 255, 0.6);
+}
+
+.crud-view-box {
+  max-height: 500px;
+  width: 96%;
+  overflow-y: auto;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.crud-view-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr); 
+  gap: 25px;
+}
+
+.crud-view-card {
+  background: linear-gradient(135deg, #0D1831, #142849);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 0 15px rgba(108, 140, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.crud-view-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(108, 140, 255, 0.6);
+}
+
+.crud-view-card h4 {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+  color: #cfd6e6;
+  text-align: center;
+}
+
+.crud-view-card .price {
+  font-weight: bold;
+  color: #6c8cff;
+  margin: 5px 0;
+}
+
+.crud-view-card .desc {
+  font-size: 0.9rem;
+  color: #aab4d4;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.crud-view-card .category {
+  font-size: 0.85rem;
+  color: #d0d6e0;
+}
+
+.crud-view-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+
+/* ----------------------------------- */
+/* Scroll personalizado */
+.crud-view-box::-webkit-scrollbar {
+  width: 10px;              /* ancho del scroll */
+}
+
+.crud-view-box::-webkit-scrollbar-track {
+  background: #0D1831;       /* color del fondo del track */
+  border-radius: 10px;
+}
+
+.crud-view-box::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6c8cff, #142849); /* color del thumb */
+  border-radius: 10px;
+  border: 2px solid #0D1831; /* borde para que se vea separado */
+}
+
+.crud-view-box::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #8aa0ff, #1a3560); /* hover más claro */
+}
