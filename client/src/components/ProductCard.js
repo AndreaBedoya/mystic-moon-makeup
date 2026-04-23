@@ -16,7 +16,11 @@ function ProductCard({ name, price, description, images, category }) {
     <div className="product-card">
       <div className="image-carousel">
         <button onClick={prevImage}>&lt;</button>
-        <img src={images[currentImage]} alt={name} />
+        {/* ✅ Aquí concatenamos la URL del backend */}
+        <img
+          src={`http://localhost:4000${images[currentImage]}`}
+          alt={name}
+        />
         <button onClick={nextImage}>&gt;</button>
       </div>
       <h3>{name}</h3>

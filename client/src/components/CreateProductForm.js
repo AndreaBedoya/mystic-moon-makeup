@@ -17,7 +17,7 @@ function CreateProductForm({ onCreate, onCancel }) {
     setImages(files);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!category) {
@@ -25,16 +25,38 @@ function CreateProductForm({ onCreate, onCancel }) {
       return;
     }
 
-    const newProduct = { name, price, description, images, category };
-    onCreate(newProduct);
-    alert("Producto creado con éxito ✅");
+    // ✅ Usar FormData para enviar texto + imágenes
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("category", category);
+    images.forEach((img) => formData.append("images", img));
 
-    // limpiar formulario
-    setName("");
-    setPrice("");
-    setDescription("");
-    setImages([]);
-    setCategory("");
+    try {
+      const res = await fetch("http://localhost:4000/api/products", {
+        method: "POST",
+        body: formData, // no se usa headers aquí, FormData lo maneja
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al crear producto");
+      }
+
+      const data = await res.json();
+      onCreate(data); // actualiza el estado en CrudProduct o Home
+      alert("Producto creado con éxito ✅");
+
+      // limpiar formulario
+      setName("");
+      setPrice("");
+      setDescription("");
+      setImages([]);
+      setCategory("");
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al crear el producto ❌");
+    }
   };
 
   return (
