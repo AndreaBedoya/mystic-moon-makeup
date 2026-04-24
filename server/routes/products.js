@@ -61,16 +61,17 @@ router.delete("/:id", async (req, res) => {
       [id]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Producto no encontrado" });
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Producto no encontrado ❌" });
     }
 
-    res.json({ message: "Producto eliminado", product: result.rows[0] });
+    res.json({ message: "Producto eliminado ✅", product: result.rows[0] });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al eliminar producto" });
+    console.error("Error al eliminar producto:", error);
+    res.status(500).json({ error: "Error interno del servidor ❌" });
   }
 });
+
 
 // Actualizar producto (PUT /api/products/:id)
 router.put("/:id", upload.array("images", 5), async (req, res) => {

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import CreateProductForm from "./CreateProductForm";
-import EditProductForm from "./EditProductForm";
+import CreateProductForm from "./CreateProductForm"; // componente para crear productos
+import EditProductForm from "./EditProductForm"; // formulario para editar productos
 import ReadProduct from "./ReadProduct"; // componente para ver productos
-import EditProductList from "./EditProductList";
+import EditProductList from "./EditProductList"; // lista para ver productos
+import DeleteProductList from "./DeleteProductList"; // componente para eliminar
+
 import "../styles/CrudProduct.css";
 
 function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
@@ -72,32 +74,15 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
 
         {/* Eliminar productos */}
         {activeCrud === "eliminar" && (
-          <div className="crud-list">
-            {Array.isArray(products) && products.length > 0 ? (
-              products.map((p, i) => (
-                <div key={i} className="crud-card-item">
-                  {p.images && p.images.length > 0 && (
-                    <img
-                      src={p.images[0]}
-                      alt={p.name}
-                      className="crud-card-img"
-                    />
-                  )}
-                  <h4>{p.name}</h4>
-                  <p>{p.category}</p>
-                  <button
-                    style={{ backgroundColor: "#e74c3c" }}
-                    onClick={() => onDelete(p)}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No hay productos disponibles para eliminar.</p>
-            )}
-          </div>
+          <DeleteProductList
+            products={products}
+            onDelete={(p) => {
+              onDelete(p);
+              setActiveCrud("menu"); // volver al menú después de eliminar
+            }}
+          />
         )}
+
       </div>
     </div>
   );
