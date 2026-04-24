@@ -12,7 +12,7 @@ function EditProductList({ products = [], onSelect }) {
               <div key={i} className="crud-edit-card">
                 {p.images && p.images.length > 0 && (
                   <img
-                    src={p.images[0]}
+                    src={`http://localhost:4000${p.images[0]}`}  // 🔹 URL completa
                     alt={p.name}
                     className="crud-edit-img"
                   />

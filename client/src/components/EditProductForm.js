@@ -13,15 +13,45 @@ function EditProductForm({ product, onUpdate, onCancel }) {
     setEditedProduct({ ...editedProduct, images: files });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!editedProduct.category) {
       alert("La categoría es obligatoria ❗");
       return;
     }
-    onUpdate(editedProduct); // ahora actualiza estado local, luego será API call
-    alert("Producto actualizado con éxito ✅");
-    onCancel(); // volver a la lista
+
+    try {
+      // Usamos FormData porque el backend espera imágenes con multer
+      const formData = new FormData();
+      formData.append("name", editedProduct.name);
+      formData.append("price", editedProduct.price);
+      formData.append("description", editedProduct.description);
+      formData.append("category", editedProduct.category);
+
+      if (editedProduct.images && editedProduct.images.length > 0) {
+        editedProduct.images.forEach((file) => {
+          formData.append("images", file);
+        });
+      }
+
+      const res = await fetch(`http://localhost:4000/api/products/${editedProduct.id}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al actualizar producto");
+      }
+
+      const updated = await res.json();
+      onUpdate(updated); // actualiza estado en el padre con el producto real de la BD
+      alert("Producto actualizado con éxito ✅");
+      onCancel(); // volver a la lista
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al actualizar el producto ❌");
+    }
   };
 
   return (
@@ -41,6 +71,8 @@ function EditProductForm({ product, onUpdate, onCancel }) {
       <div>
         <label>Precio</label>
         <input
+          type="number"
+          step="0.01"
           value={editedProduct.price}
           onChange={(e) =>
             setEditedProduct({ ...editedProduct, price: e.target.value })

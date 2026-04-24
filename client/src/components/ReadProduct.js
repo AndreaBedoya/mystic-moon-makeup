@@ -12,7 +12,7 @@ function ReadProduct({ products = [] }) {
               <div key={i} className="crud-view-card">
                 {p.images && p.images.length > 0 && (
                   <img
-                    src={p.images[0]}
+                    src={`http://localhost:4000${p.images[0]}`}
                     alt={p.name}
                     className="crud-view-img"
                   />
