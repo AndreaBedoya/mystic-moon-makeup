@@ -1,13 +1,47 @@
 import React from "react";
+import Swal from "sweetalert2";
 import "../styles/DeleteProductList.css";
 
 function DeleteProductList({ products = [], onDelete }) {
   const handleDelete = (product) => {
-    // Confirmación antes de eliminar
-    const confirm = window.confirm(`¿Seguro que quieres eliminar "${product.name}"?`);
-    if (confirm) {
-      onDelete(product);
-    }
+    Swal.fire({
+      title: "¿Estás segura?",
+      text: `El producto "${product.name}" se eliminará permanentemente`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6", // azul
+      cancelButtonColor: "#d33",     // rojo
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // 🔹 Llamada al backend para eliminar
+          await fetch(`http://localhost:4000/api/products/${product.id}`, {
+            method: "DELETE",
+          });
+
+          // 🔹 Actualizar estado en el Dashboard
+          onDelete(product);
+
+          // 🔹 Mostrar alerta de éxito
+          Swal.fire({
+            title: "Eliminado",
+            text: "El producto fue eliminado con éxito",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+          });
+        } catch (error) {
+          console.error("Error al eliminar producto", error);
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al eliminar el producto ❌",
+            icon: "error",
+            confirmButtonColor: "#3085d6",
+          });
+        }
+      }
+    });
   };
 
   return (

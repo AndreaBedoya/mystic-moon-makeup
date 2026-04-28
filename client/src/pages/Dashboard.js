@@ -5,39 +5,61 @@ import CrudProduct from "../components/CrudProduct";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
-  const [activeSection, setActiveSection] = useState("inicio");
-
-  // Estado central de productos
+  const [activeSection, setActiveSection] = useState("menu");
   const [products, setProducts] = useState([]);
 
   // 🔹 Cargar productos desde el backend
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/api/products");
-        const data = await res.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error al cargar productos", error);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/api/products");
+      const data = await res.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error al cargar productos", error);
+    }
+  };
 
+  useEffect(() => {
     fetchProducts();
   }, []);
 
-  // Funciones CRUD
-  const handleCreate = (newProduct) => {
-    setProducts([...products, newProduct]);
+  // 🔹 Crear producto (recibe FormData)
+  const handleCreate = async (formData) => {
+    try {
+      await fetch("http://localhost:4000/api/products", {
+        method: "POST",
+        body: formData, // ✅ aquí usamos el FormData
+      });
+      await fetchProducts(); // refrescar lista
+    } catch (error) {
+      console.error("Error al crear producto", error);
+    }
   };
 
-  const handleUpdate = (updatedProduct) => {
-    setProducts(products.map((p) =>
-      p.id === updatedProduct.id ? updatedProduct : p
-    ));
+  // 🔹 Editar producto
+  const handleUpdate = async (updatedProduct) => {
+    try {
+      await fetch(`http://localhost:4000/api/products/${updatedProduct.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedProduct),
+      });
+      await fetchProducts(); // refrescar lista
+    } catch (error) {
+      console.error("Error al actualizar producto", error);
+    }
   };
 
-  const handleDelete = (productToDelete) => {
-    setProducts(products.filter((p) => p.id !== productToDelete.id));
+  // 🔹 Eliminar producto
+  const handleDelete = async (productToDelete) => {
+    try {
+      await fetch(`http://localhost:4000/api/products/${productToDelete.id}`, {
+        method: "DELETE",
+      });
+      await fetchProducts(); // refrescar lista
+    } catch (error) {
+      console.error("Error al eliminar producto", error);
+    }
   };
 
   return (
@@ -46,10 +68,10 @@ function Dashboard() {
       <div className="dashboard-main">
         <Topbar />
         <div className="dashboard-content">
-          {activeSection === "inicio" && (
+          {activeSection === "menu" && (
             <>
-              <h1>Bienvenida a Mystic Moon Makeup</h1>
-              <p>Aquí podrás gestionar productos, categorías y más.</p>
+              <h1>Panel de administración</h1>
+              <p>Gestiona productos, categorías y más.</p>
             </>
           )}
           {activeSection === "productos" && (

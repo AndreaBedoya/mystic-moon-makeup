@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CreateProductForm from "./CreateProductForm"; // componente para crear productos
-import EditProductForm from "./EditProductForm"; // formulario para editar productos
-import ReadProduct from "./ReadProduct"; // componente para ver productos
-import EditProductList from "./EditProductList"; // lista para ver productos
-import DeleteProductList from "./DeleteProductList"; // componente para eliminar
+import CreateProductForm from "./CreateProductForm"; 
+import EditProductForm from "./EditProductForm"; 
+import ReadProduct from "./ReadProduct"; 
+import EditProductList from "./EditProductList"; 
+import DeleteProductList from "./DeleteProductList"; 
 
 import "../styles/CrudProduct.css";
 
@@ -37,8 +37,9 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
         {/* Crear producto */}
         {activeCrud === "crear" && (
           <CreateProductForm
-            onCreate={(newProduct) => {
-              onCreate(newProduct);
+            onCreate={async (newProduct) => {
+              // 🔹 Solo llamamos a onCreate del Dashboard
+              await onCreate(newProduct);
               setActiveCrud("menu");
             }}
             onCancel={() => setActiveCrud("menu")}
@@ -56,12 +57,11 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
           />
         )}
 
-
         {activeCrud === "editar" && selectedProduct && (
           <EditProductForm
             product={selectedProduct}
-            onUpdate={(updated) => {
-              onUpdate(updated);
+            onUpdate={async (updated) => {
+              await onUpdate(updated);
               setSelectedProduct(null);
               setActiveCrud("menu");
             }}
@@ -76,13 +76,12 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
         {activeCrud === "eliminar" && (
           <DeleteProductList
             products={products}
-            onDelete={(p) => {
-              onDelete(p);
-              setActiveCrud("menu"); // volver al menú después de eliminar
+            onDelete={async (p) => {
+              await onDelete(p);
+              setActiveCrud("menu"); 
             }}
           />
         )}
-
       </div>
     </div>
   );

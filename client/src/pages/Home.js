@@ -8,7 +8,6 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Todo");
   const [products, setProducts] = useState([]);
 
-  // 🚀 Traer productos del backend al cargar el Home
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -19,11 +18,9 @@ function Home() {
         console.error("Error al cargar productos", error);
       }
     };
-
     fetchProducts();
   }, []);
 
-  // Filtrar por categoría
   const filteredProducts = selectedCategory === "Todo"
     ? products
     : products.filter(p => p.category === selectedCategory);

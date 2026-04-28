@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import "../styles/CreateProductForm.css";
 
 function CreateProductForm({ onCreate, onCancel }) {
@@ -11,17 +12,27 @@ function CreateProductForm({ onCreate, onCancel }) {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 5) {
-      alert("Solo puedes subir máximo 5 imágenes ❗");
+      Swal.fire({
+        title: "Límite de imágenes ❗",
+        text: "Solo puedes subir máximo 5 imágenes.",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+      });
       return;
     }
     setImages(files);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!category) {
-      alert("La categoría es obligatoria ❗");
+      Swal.fire({
+        title: "Categoría obligatoria ❗",
+        text: "Debes seleccionar una categoría antes de crear el producto.",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+      });
       return;
     }
 
@@ -33,35 +44,26 @@ function CreateProductForm({ onCreate, onCancel }) {
     formData.append("category", category);
     images.forEach((img) => formData.append("images", img));
 
-    try {
-      const res = await fetch("http://localhost:4000/api/products", {
-        method: "POST",
-        body: formData, // no se usa headers aquí, FormData lo maneja
-      });
+    // 🔹 Pasamos el FormData al Dashboard (sin await, sin fetch aquí)
+    onCreate(formData);
 
-      if (!res.ok) {
-        throw new Error("Error al crear producto");
-      }
+    Swal.fire({
+      title: "Producto creado ✅",
+      text: `El producto "${name}" fue creado con éxito.`,
+      icon: "success",
+      confirmButtonColor: "#3085d6",
+    });
 
-      const data = await res.json();
-      onCreate(data); // actualiza el estado en CrudProduct o Home
-      alert("Producto creado con éxito ✅");
-
-      // limpiar formulario
-      setName("");
-      setPrice("");
-      setDescription("");
-      setImages([]);
-      setCategory("");
-    } catch (error) {
-      console.error(error);
-      alert("Hubo un problema al crear el producto ❌");
-    }
+    // limpiar formulario
+    setName("");
+    setPrice("");
+    setDescription("");
+    setImages([]);
+    setCategory("");
   };
 
   return (
     <form className="create-form" onSubmit={handleSubmit}>
-      {/* Título del formulario */}
       <h2 className="form-title">Crea un nuevo producto</h2>
 
       <div>

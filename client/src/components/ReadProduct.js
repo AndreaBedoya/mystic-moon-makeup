@@ -8,8 +8,8 @@ function ReadProduct({ products = [] }) {
       <div className="crud-view-box">
         <div className="crud-view-grid">
           {Array.isArray(products) && products.length > 0 ? (
-            products.map((p, i) => (
-              <div key={i} className="crud-view-card">
+            products.map((p) => (
+              <div key={p.id} className="crud-view-card">
                 {p.images && p.images.length > 0 && (
                   <img
                     src={`http://localhost:4000${p.images[0]}`}

@@ -29,10 +29,22 @@ router.post("/", upload.array("images", 5), async (req, res) => {
     : [];
 
   try {
+    // 🔹 Validar duplicados (nombre + categoría)
+    const existing = await pool.query(
+      "SELECT * FROM products WHERE LOWER(name) = LOWER($1) AND LOWER(category) = LOWER($2)",
+      [name, category]
+    );
+
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: "El producto ya existe ❌" });
+    }
+
+    // 🔹 Insertar solo si no existe
     const result = await pool.query(
       "INSERT INTO products (name, price, description, category, images) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [name, price, description, category, imagePaths]
     );
+
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
@@ -72,18 +84,28 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-
-// Actualizar producto (PUT /api/products/:id)
+// ✅ Actualizar producto (PUT /api/products/:id)
 router.put("/:id", upload.array("images", 5), async (req, res) => {
   const { id } = req.params;
   const { name, price, description, category } = req.body;
 
-  // Si se suben nuevas imágenes, reemplazarlas
   const imagePaths = req.files && req.files.length > 0
     ? req.files.map(file => `/uploads/${file.filename}`)
     : null;
 
   try {
+    // 🔹 Validar duplicados al actualizar (si cambia nombre/categoría)
+    if (name && category) {
+      const existing = await pool.query(
+        "SELECT * FROM products WHERE LOWER(name) = LOWER($1) AND LOWER(category) = LOWER($2) AND id <> $3",
+        [name, category, id]
+      );
+
+      if (existing.rows.length > 0) {
+        return res.status(400).json({ error: "Ya existe otro producto con ese nombre y categoría ❌" });
+      }
+    }
+
     const result = await pool.query(
       `UPDATE products 
        SET name = COALESCE($1, name), 
@@ -97,13 +119,13 @@ router.put("/:id", upload.array("images", 5), async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Producto no encontrado" });
+      return res.status(404).json({ error: "Producto no encontrado ❌" });
     }
 
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error al actualizar producto" });
+    res.status(500).json({ error: "Error al actualizar producto ❌" });
   }
 });
 
