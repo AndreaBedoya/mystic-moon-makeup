@@ -18,7 +18,14 @@ function ReadProduct({ products = [] }) {
                   />
                 )}
                 <h4>{p.name}</h4>
-                <p className="price">{p.price}</p>
+                <p className="price">
+                  {new Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(p.price)}
+                </p>
                 <p className="desc">{p.description}</p>
                 <p className="category">{p.category}</p>
               </div>

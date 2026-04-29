@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import "../styles/EditProductForm.css";
 
 function EditProductForm({ product, onUpdate, onCancel }) {
@@ -7,7 +8,12 @@ function EditProductForm({ product, onUpdate, onCancel }) {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 5) {
-      alert("Solo puedes subir máximo 5 imágenes ❗");
+      Swal.fire({
+        title: "Límite de imágenes ❗",
+        text: "Solo puedes subir máximo 5 imágenes.",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+      });
       return;
     }
     setEditedProduct({ ...editedProduct, images: files });
@@ -17,7 +23,12 @@ function EditProductForm({ product, onUpdate, onCancel }) {
     e.preventDefault();
 
     if (!editedProduct.category) {
-      alert("La categoría es obligatoria ❗");
+      Swal.fire({
+        title: "Categoría obligatoria ❗",
+        text: "Debes seleccionar una categoría antes de guardar cambios.",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+      });
       return;
     }
 
@@ -46,11 +57,23 @@ function EditProductForm({ product, onUpdate, onCancel }) {
 
       const updated = await res.json();
       onUpdate(updated); // actualiza estado en el padre con el producto real de la BD
-      alert("Producto actualizado con éxito ✅");
+
+      Swal.fire({
+        title: "Producto actualizado ✅",
+        text: `El producto "${editedProduct.name}" fue actualizado con éxito.`,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+      });
+
       onCancel(); // volver a la lista
     } catch (error) {
       console.error(error);
-      alert("Hubo un problema al actualizar el producto ❌");
+      Swal.fire({
+        title: "Error ❌",
+        text: "Hubo un problema al actualizar el producto.",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+      });
     }
   };
 
