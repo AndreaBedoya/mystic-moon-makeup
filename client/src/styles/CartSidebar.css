@@ -1,107 +1,218 @@
 .cart-sidebar {
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 350px;
-  height: 100%;
-  background: #142849;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 400px;
+    height: 95%;          /* ✅ altura fija */
+    background: #142849;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.4);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    color: #fff;
+}
+
+/* ✅ Encabezado con título y botón cerrar */
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cart-header h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Cinzel Decorative", serif;
+    color: #fff;
+    margin: 0;
 }
 
 .close-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  align-self: flex-end;
-}
-
-.cart-sidebar h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .envio-msg {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 5px;
+    font-size: 1.2rem;
+    color: #f1f1f1;
+    margin-bottom: 8px;
+    font-family: "Open Sans", sans-serif;
 }
 
 .progress-bar {
-  background: #eee;
-  border-radius: 5px;
-  height: 8px;
-  margin-bottom: 15px;
+  position: relative;
+  background: #5D9EE2;
+  border-radius: 50px;
+  height: 12px;
+  margin-bottom: 20px;
+  padding: 3px;
 }
 
 .progress {
-  background: #cba6f7;
+  background: #0D1831;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 50px;
+}
+
+.progress-icon {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ Scroll vertical en productos */
+.cart-items-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-bottom: 15px;
+}
+
+.cart-items-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-items-container::-webkit-scrollbar-thumb {
+  background: #5D9EE2;
+  border-radius: 10px;
 }
 
 .cart-item {
-  display: grid;
-  grid-template-columns: 1fr 40px 80px 30px;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+    border: 2px solid #5D9EE2;
+}
+
+.cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .item-name {
-  font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.item-qty-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.qty-btn {
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.qty-btn svg {
+    color: #fff;
+}
+
+.qty-btn:hover {
+    background: #417bbd;
 }
 
 .item-qty {
-  text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
 }
 
 .item-price {
-  text-align: right;
-  font-weight: bold;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #5D9EE2;
 }
 
 .delete-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #d33;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn svg {
+    width: 30px;
+    height: 30px;
+    color: #ff4d4d;
 }
 
 .subtotal {
-  margin-top: 15px;
-  font-size: 1.1rem;
-  font-weight: bold;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
 }
 
 .checkout-btn {
-  background: #cba6f7;
-  color: #000;
-  font-weight: bold;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  cursor: pointer;
+    background: #5D9EE2;
+    color: #fff;
+    font-weight: bold;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
 }
 
 .checkout-btn:hover {
-  background: #a67df0;
+    background: #417bbd;
 }
 
 .clear-btn {
-  background: #eee;
-  color: #333;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 8px;
-  cursor: pointer;
+    background: #eee;
+    color: #333;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
 }
 
 .clear-btn:hover {
-  background: #ddd;
+    background: #ddd;
 }

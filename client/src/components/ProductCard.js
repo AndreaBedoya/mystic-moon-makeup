@@ -38,8 +38,15 @@ function ProductCard({ id, name, price, description, images, category, onAddToCa
       <button
         className="add-to-cart"
         onClick={() => {
-          addToCart({ id, name, price, images, category });
-          if (onAddToCart) onAddToCart(); // ✅ abre carrito
+          addToCart({
+            id,
+            name,
+            price,
+            description,
+            category,
+            image: `http://localhost:4000${images[currentImage]}` // ✅ imagen actual
+          });
+          if (onAddToCart) onAddToCart();
         }}
       >
         Agregar al carrito
