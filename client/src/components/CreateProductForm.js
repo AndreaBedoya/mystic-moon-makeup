@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "../styles/CreateProductForm.css";
 
@@ -8,6 +8,15 @@ function CreateProductForm({ onCreate, onCancel }) {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]); // 🔹 categorías dinámicas
+
+  // 🔹 Cargar categorías desde el backend
+  useEffect(() => {
+    fetch("http://localhost:4000/api/categories")
+      .then(res => res.json())
+      .then(data => setCategories(data))
+      .catch(err => console.error("Error cargando categorías", err));
+  }, []);
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -44,7 +53,7 @@ function CreateProductForm({ onCreate, onCancel }) {
     formData.append("category", category);
     images.forEach((img) => formData.append("images", img));
 
-    // 🔹 Pasamos el FormData al Dashboard (sin await, sin fetch aquí)
+    // 🔹 Pasamos el FormData al Dashboard
     onCreate(formData);
 
     Swal.fire({
@@ -95,10 +104,11 @@ function CreateProductForm({ onCreate, onCancel }) {
         <label>Categoría *</label>
         <select value={category} onChange={(e) => setCategory(e.target.value)} required>
           <option value="">Selecciona una categoría</option>
-          <option value="Novedades">Novedades</option>
-          <option value="Maquillaje">Maquillaje</option>
-          <option value="Kits">Kits</option>
-          <option value="Skincare">Skincare</option>
+          {categories.map(cat => (
+            <option key={cat.id} value={cat.name}>
+              {cat.name}
+            </option>
+          ))}
         </select>
       </div>
 
