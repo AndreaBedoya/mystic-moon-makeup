@@ -1,36 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import "../../styles/ModalCategoryCreate.css";
+import "../../styles/ModalCategoryEdit.css";
 
-function ModalCategoryCreate({ onConfirm, onCancel }) {
-  const [name, setName] = useState("");
+function ModalCategoryEdit({ category, onConfirm, onCancel }) {
+  const [name, setName] = useState(category.name || "");
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    setName(category.name || "");
+  }, [category]);
 
   const handleSubmit = () => {
     if (!name.trim()) {
       Swal.fire("Atención", "El nombre no puede estar vacío", "warning");
       return;
     }
-    if (!image) {
-      Swal.fire("Atención", "Debes seleccionar una imagen", "warning");
-      return;
-    }
 
     // ✅ Enviar objeto con nombre e imagen al padre
-    onConfirm({ name, image });
-
-    // limpiar campos
-    setName("");
-    setImage(null);
+    onConfirm({ id: category.id, name, image });
 
     // ✅ Mostrar alerta de éxito
-    Swal.fire("Éxito", "La categoría fue enviada con imagen", "success");
+    Swal.fire("Éxito", "La categoría fue editada con éxito", "success");
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h3>Crear nueva categoría</h3>
+        <h3>Editar categoría</h3>
         <input
           type="text"
           placeholder="Nombre de la categoría"
@@ -43,12 +39,12 @@ function ModalCategoryCreate({ onConfirm, onCancel }) {
           onChange={(e) => setImage(e.target.files[0])}
         />
         <div className="modal-actions">
-          <button onClick={handleSubmit}>Crear</button>
-          <button onClick={onCancel}>Cancelar</button>
+          <button onClick={handleSubmit} className="edit-btn">Guardar</button>
+          <button onClick={onCancel} className="cancel-btn">Cancelar</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default ModalCategoryCreate;
+export default ModalCategoryEdit;
