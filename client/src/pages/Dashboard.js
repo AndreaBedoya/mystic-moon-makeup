@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import CrudProduct from "../components/CrudProduct";
+import Categories from "../components/Categories";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
@@ -81,6 +82,9 @@ function Dashboard() {
               onUpdate={handleUpdate}
               onDelete={handleDelete}
             />
+          )}
+          {activeSection === "categorias" && (
+            <Categories />
           )}
         </div>
       </div>

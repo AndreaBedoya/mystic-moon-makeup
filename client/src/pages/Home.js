@@ -29,7 +29,9 @@ function Home() {
 
   return (
     <div className="home">
-      <Navbar />
+      {/* ✅ Navbar recibe la función para abrir carrito */}
+      <Navbar onCartClick={() => setIsCartOpen(true)} />
+
       <MenuBar setSelectedCategory={setSelectedCategory} />
       <main className="catalogo">
         <h2>Catálogo de productos</h2>

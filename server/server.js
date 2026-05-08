@@ -18,9 +18,13 @@ if (!fs.existsSync(uploadsDir)) {
 // ✅ Servir carpeta "uploads" como pública
 app.use("/uploads", express.static(uploadsDir));
 
-// Importar rutas
+// 🔹 Importar rutas
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
+
+// 🔹 Importar rutas de categorías
+const categoriesRoutes = require("./routes/categories");
+app.use("/api/categories", categoriesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
