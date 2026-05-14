@@ -90,28 +90,28 @@ function Categories() {
 
   return (
     <div className="categories">
-      <h2 className="crud-view-title">Categorías</h2>
-      <div className="crud-view-box">
-        <div className="crud-view-grid">
+      <h2 className="categories-view-title">Categorías</h2>
+      <div className="categories-view-box">
+        <div className="categories-view-grid">
           {categories.map(cat => (
-            <div key={cat.id} className="crud-view-card">
+            <div key={cat.id} className="categories-view-card">
               {cat.image_url && (
                 <img
                   src={`http://localhost:4000${cat.image_url}`}
                   alt={cat.name}
-                  className="crud-view-img"
+                  className="categories-view-img"
                 />
               )}
               <h4>{cat.name}</h4>
-              <div className="crud-view-actions">
+              <div className="categories-view-actions">
                 <button
-                  className="crud-btn delete-btn"
+                  className="categories-btn delete-btn"
                   onClick={() => handleDeleteCategory(cat.id)}
                 >
                   <IconTrash size={18} color="#fff" /> Eliminar
                 </button>
                 <button
-                  className="crud-btn edit-btn"
+                  className="categories-btn edit-btn"
                   onClick={() => {
                     setSelectedCategory(cat);
                     setShowEditModal(true);

@@ -3,6 +3,11 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 
+// Importar rutas
+const productRoutes = require("./routes/products");
+const categoriesRoutes = require("./routes/categories");
+const webhookRoutes = require("./routes/webhook"); // ✅ nuevo
+
 const app = express();
 const PORT = 4000;
 
@@ -18,13 +23,14 @@ if (!fs.existsSync(uploadsDir)) {
 // ✅ Servir carpeta "uploads" como pública
 app.use("/uploads", express.static(uploadsDir));
 
-// 🔹 Importar rutas
-const productRoutes = require("./routes/products");
+// 🔹 Rutas de productos
 app.use("/api/products", productRoutes);
 
-// 🔹 Importar rutas de categorías
-const categoriesRoutes = require("./routes/categories");
+// 🔹 Rutas de categorías
 app.use("/api/categories", categoriesRoutes);
+
+// 🔹 Ruta del webhook de WhatsApp
+app.use("/webhook", webhookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);

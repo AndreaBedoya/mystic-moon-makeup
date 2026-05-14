@@ -3,6 +3,7 @@ import '../styles/Home.css';
 import Navbar from '../components/Navbar';
 import MenuBar from '../components/MenuBar';
 import ProductCard from '../components/ProductCard';
+import WhatsappButton from "../components/WhatsappButton";
 import CartSidebar from '../components/CartSidebar';
 
 function Home() {
@@ -54,6 +55,7 @@ function Home() {
       {/* ✅ Carrito solo aparece si isCartOpen es true */}
       {isCartOpen && <CartSidebar onClose={() => setIsCartOpen(false)} />}
 
+      <WhatsappButton />
       <footer className="footer">
         <p>© 2026 Mystic Moon Makeup 🌙</p>
       </footer>
