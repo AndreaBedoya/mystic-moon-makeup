@@ -6,7 +6,8 @@ const fs = require("fs");
 // Importar rutas
 const productRoutes = require("./routes/products");
 const categoriesRoutes = require("./routes/categories");
-const webhookRoutes = require("./routes/webhook"); // ✅ nuevo
+const userRoutes = require("./routes/user"); // ✅ debe llamarse igual que el archivo
+// const webhookRoutes = require("./routes/webhook"); // opcional, comenta si no lo usas
 
 const app = express();
 const PORT = 4000;
@@ -23,14 +24,17 @@ if (!fs.existsSync(uploadsDir)) {
 // ✅ Servir carpeta "uploads" como pública
 app.use("/uploads", express.static(uploadsDir));
 
-// 🔹 Rutas de productos
+// ✅ Rutas de productos
 app.use("/api/products", productRoutes);
 
-// 🔹 Rutas de categorías
+// ✅ Rutas de categorías
 app.use("/api/categories", categoriesRoutes);
 
-// 🔹 Ruta del webhook de WhatsApp
-app.use("/webhook", webhookRoutes);
+// ✅ Rutas de usuarios
+app.use("/api/users", userRoutes); // 🔹 consistente con las demás rutas
+
+// 🔹 Ruta del webhook de WhatsApp (solo si ya tienes el archivo creado)
+// app.use("/api/webhook", webhookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);

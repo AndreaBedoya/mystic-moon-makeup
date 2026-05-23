@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import CrudProduct from "../components/CrudProduct";
 import Categories from "../components/Categories";
+import UsersList from "../components/UsersList";   // ✅ Import único
 import "../styles/Dashboard.css";
 
 function Dashboard() {
@@ -72,7 +73,7 @@ function Dashboard() {
           {activeSection === "menu" && (
             <>
               <h1>Panel de administración</h1>
-              <p>Gestiona productos, categorías y más.</p>
+              <p>Gestiona productos, categorías y usuarios.</p>
             </>
           )}
           {activeSection === "productos" && (
@@ -83,9 +84,8 @@ function Dashboard() {
               onDelete={handleDelete}
             />
           )}
-          {activeSection === "categorias" && (
-            <Categories />
-          )}
+          {activeSection === "categorias" && <Categories />}
+          {activeSection === "usuarios" && <UsersList />} {/* ✅ sección usuarios */}
         </div>
       </div>
     </div>

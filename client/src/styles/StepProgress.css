@@ -1,0 +1,40 @@
+.step-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ✅ centrado */
+  width: 100%;
+}
+
+.step-container {
+  display: flex;
+  align-items: center;
+}
+
+.step-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #ccc;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.step-circle.active {
+  background: #5D9EE2; /* azul activo */
+}
+
+.step-line {
+  flex: 1;
+  height: 4px;
+  background: #ccc;
+  margin: 0 10px;
+  transition: background 0.3s ease;
+}
+
+.step-line.active {
+  background: #5D9EE2;
+}
