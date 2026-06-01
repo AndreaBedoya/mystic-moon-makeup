@@ -8,7 +8,7 @@ function UserForm({ onSubmit, onCancel }) {
     email: "",
     password: "",
     role: "admin",
-    profile_picture: "",
+    profile_picture: null, // ✅ archivo
     document_id: "",
     phone_number: "",
     birthdate: "",
@@ -23,30 +23,37 @@ function UserForm({ onSubmit, onCancel }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, profile_picture: e.target.files[0] });
+  };
+
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSubmit(formData);
+
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+
+    await onSubmit(formDataToSend);
   };
 
   return (
     <div className="form-container">
       <form className="create-form" onSubmit={handleSubmit}>
-        {/* ✅ Bloque 1: Título */}
         <h2 className="form-title">Registrar nuevo usuario</h2>
 
-        {/* ✅ Bloque 2: Barra de progreso centrada */}
         <div className="progress-wrapper">
           <StepProgress step={step} totalSteps={totalSteps} />
         </div>
 
-        {/* ✅ Bloque 3: Formulario */}
         {step === 1 && (
           <>
             <div>
-              <label>Usuario</label>
+              <label>Nombre de usuario</label>
               <input
                 name="username"
                 value={formData.username}
@@ -90,12 +97,12 @@ function UserForm({ onSubmit, onCancel }) {
         {step === 2 && (
           <>
             <div>
-              <label>Foto de perfil (URL)</label>
+              <label>Foto de perfil</label>
               <input
-                type="text"
+                type="file"
                 name="profile_picture"
-                value={formData.profile_picture}
-                onChange={handleChange}
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
 
@@ -154,9 +161,7 @@ function UserForm({ onSubmit, onCancel }) {
           </>
         )}
 
-        {/* Botones */}
         <div className="form-buttons">
-          {/* ✅ Cancelar solo en el primer paso */}
           {step === 1 && (
             <>
               <button type="button" className="btn-secondary" onClick={onCancel}>
@@ -168,7 +173,6 @@ function UserForm({ onSubmit, onCancel }) {
             </>
           )}
 
-          {/* ✅ Pasos intermedios (2) */}
           {step > 1 && step < totalSteps && (
             <>
               <button type="button" className="btn-secondary" onClick={prevStep}>
@@ -180,17 +184,15 @@ function UserForm({ onSubmit, onCancel }) {
             </>
           )}
 
-          {/* ✅ Último paso (3) */}
           {step === totalSteps && (
             <>
-            <button type="button" className="btn-secondary" onClick={prevStep}>
+              <button type="button" className="btn-secondary" onClick={prevStep}>
                 Anterior
               </button>
               <button type="submit" className="btn-primary">Registrar</button>
             </>
           )}
         </div>
-
       </form>
     </div>
   );

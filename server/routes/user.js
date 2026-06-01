@@ -2,16 +2,29 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
 
-// Crear usuario
-router.post("/", async (req, res) => {
+// ✅ Configuración de multer (carpeta donde se guardan las imágenes)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../uploads")); // carpeta uploads
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // nombre único
+  },
+});
+
+const upload = multer({ storage });
+
+// ✅ Crear usuario con imagen
+router.post("/", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
       username,
       email,
       password,
       role,
-      profile_picture,
       document_id,
       phone_number,
       birthdate,
@@ -20,6 +33,7 @@ router.post("/", async (req, res) => {
     } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const profile_picture = req.file ? req.file.filename : null;
 
     const result = await pool.query(
       `INSERT INTO users 
@@ -41,11 +55,12 @@ router.post("/", async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
+    console.error("Error al crear usuario:", err.message);
     res.status(400).json({ error: err.message });
   }
 });
 
-// Listar usuarios
+// ✅ Listar usuarios
 router.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
@@ -55,20 +70,21 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Editar usuario
-router.put("/:id", async (req, res) => {
+// ✅ Editar usuario
+router.put("/:id", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
       username,
       email,
       role,
-      profile_picture,
       document_id,
       phone_number,
       birthdate,
       address,
       status,
     } = req.body;
+
+    const profile_picture = req.file ? req.file.filename : null;
 
     await pool.query(
       `UPDATE users SET 
@@ -94,7 +110,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Eliminar usuario
+// ✅ Eliminar usuario
 router.delete("/:id", async (req, res) => {
   try {
     await pool.query("DELETE FROM users WHERE id=$1", [req.params.id]);

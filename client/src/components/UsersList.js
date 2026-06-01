@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import UserForm from "./UserForm";
+import "../styles/UserList.css";
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -7,7 +9,7 @@ function UsersList() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:4000/users");
+      const res = await fetch("http://localhost:4000/api/users");
       const data = await res.json();
       setUsers(data);
     } catch (error) {
@@ -21,61 +23,100 @@ function UsersList() {
 
   const handleCreateUser = async (newUser) => {
     try {
-      await fetch("http://localhost:4000/users", {
+      await fetch("http://localhost:4000/api/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
+        body: newUser,
       });
+
+      Swal.fire({
+        icon: "success",
+        title: "Usuario registrado",
+        text: "El usuario se ha registrado con éxito.",
+        confirmButtonColor: "#6c8cff",
+      });
+
       setShowForm(false);
       fetchUsers();
     } catch (error) {
       console.error("Error al crear usuario", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo registrar el usuario.",
+        confirmButtonColor: "#d9534f",
+      });
     }
   };
 
   const handleDeleteUser = async (id) => {
     try {
-      await fetch(`http://localhost:4000/users/${id}`, {
+      await fetch(`http://localhost:4000/api/users/${id}`, {
         method: "DELETE",
       });
+
+      Swal.fire({
+        icon: "success",
+        title: "Usuario eliminado",
+        text: "El usuario ha sido eliminado correctamente.",
+        confirmButtonColor: "#6c8cff",
+      });
+
       fetchUsers();
     } catch (error) {
       console.error("Error al eliminar usuario", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar el usuario.",
+        confirmButtonColor: "#d9534f",
+      });
     }
   };
 
   return (
-    <div className="users-container">
+    <div className="users">
       {!showForm ? (
         <>
-          {/* ✅ El título solo aparece en la vista de lista */}
-          <h2>Usuarios registrados</h2>
-
-          <div className="users-grid">
-            {users.map((user) => (
-              <div key={user.id} className="user-card">
-                <h3>{user.username}</h3>
-                <p>{user.email}</p>
-                <p>Rol: {user.role}</p>
-                <p>Teléfono: {user.phone_number}</p>
-                <p>Cédula: {user.document_id}</p>
-                <p>Estado: {user.status}</p>
-                <div className="user-actions">
-                  <button className="btn-edit">Editar</button>
-                  <button
-                    className="btn-delete"
-                    onClick={() => handleDeleteUser(user.id)}
-                  >
-                    Eliminar
-                  </button>
+          <h2 className="users-view-title">Usuarios</h2>
+          <div className="users-view-box">
+            <div className="users-view-grid">
+              {users.map((user) => (
+                <div key={user.id} className="users-view-card">
+                  {user.profile_picture && (
+                    <img
+                      src={`http://localhost:4000/uploads/${user.profile_picture}`}
+                      alt="Foto perfil"
+                      className="users-view-img"
+                    />
+                  )}
+                  <h4>{user.username}</h4>
+                  <p>{user.email}</p>
+                  <p>Rol: {user.role}</p>
+                  <p>Teléfono: {user.phone_number}</p>
+                  <p>Cédula: {user.document_id}</p>
+                  <p>Estado: {user.status}</p>
+                  <div className="users-view-actions">
+                    <button className="edit-btn">Editar</button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDeleteUser(user.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <button className="btn-create" onClick={() => setShowForm(true)}>
-            + Crear nuevo usuario
-          </button>
+          <div className="create-user">
+            <button
+              className="create-btn"
+              onClick={() => setShowForm(true)}
+            >
+              + Crear nuevo usuario
+            </button>
+          </div>
         </>
       ) : (
         <UserForm
