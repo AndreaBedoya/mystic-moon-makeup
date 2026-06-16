@@ -5,7 +5,10 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 
-// ✅ Configuración de multer (carpeta donde se guardan las imágenes)
+//---------------------------------------------------------------------------------------
+// -------Configuración de multer (carpeta donde se guardan las imágenes) ---------------
+//---------------------------------------------------------------------------------------
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads")); // carpeta uploads
@@ -17,7 +20,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ✅ Crear usuario con imagen
+//---------------------------------------------------------------------------------------
+// ----------------------------- Crear usuario con imagen -------------------------------
+//---------------------------------------------------------------------------------------
 router.post("/", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
@@ -56,21 +61,35 @@ router.post("/", upload.single("profile_picture"), async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     console.error("Error al crear usuario:", err.message);
-    res.status(400).json({ error: err.message });
+    //---------------------------------------------------------------------------------------
+    //-------------Capturamos error de duplicado (código 23505 en PostgreSQL)----------------
+    //---------------------------------------------------------------------------------------
+    if (err.code === "23505") {
+      return res.status(400).json({
+        error: `El usuario ${req.body.username} ya ha sido registrado anteriormente.`,
+      });
+    }
+
+    res.status(500).json({ error: "Error interno al crear usuario" });
   }
 });
 
-// ✅ Listar usuarios
+//---------------------------------------------------------------------------------------
+// ------------------------------------- Listar usuarios --------------------------------
+//---------------------------------------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Error al listar usuarios:", err.message);
+    res.status(500).json({ error: "Error interno al listar usuarios" });
   }
 });
 
-// ✅ Editar usuario
+//---------------------------------------------------------------------------------------
+// ----------------------------- Editar usuario------------------------------------------
+//---------------------------------------------------------------------------------------
 router.put("/:id", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
@@ -82,14 +101,26 @@ router.put("/:id", upload.single("profile_picture"), async (req, res) => {
       birthdate,
       address,
       status,
+      password,
     } = req.body;
 
-    const profile_picture = req.file ? req.file.filename : null;
+    let hashedPassword = null;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
 
-    await pool.query(
+    // ---------------------------------------------------------------------------------------
+    // ------Si no hay archivo nuevo, dejamos undefined para conservar la foto anterior ------
+    //----------------------------------------------------------------------------------------
+    const profile_picture = req.file ? req.file.filename : undefined;
+
+    const result = await pool.query(
       `UPDATE users SET 
-       username=$1, email=$2, role=$3, profile_picture=$4, document_id=$5, phone_number=$6, birthdate=$7, address=$8, status=$9
-       WHERE id=$10`,
+       username=$1, email=$2, role=$3, 
+       profile_picture=COALESCE($4, profile_picture), 
+       document_id=$5, phone_number=$6, birthdate=$7, address=$8, status=$9,
+       password_hash=COALESCE($10, password_hash)
+       WHERE id=$11 RETURNING *`,
       [
         username,
         email,
@@ -100,23 +131,35 @@ router.put("/:id", upload.single("profile_picture"), async (req, res) => {
         birthdate,
         address,
         status,
+        hashedPassword,
         req.params.id,
       ]
     );
 
-    res.json({ message: "Usuario actualizado" });
+    res.json(result.rows[0]);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Error al actualizar usuario:", err.message);
+
+    if (err.code === "23505") {
+      return res.status(400).json({
+        error: `El correo o usuario '${req.body.username}' ya existe y no puede ser duplicado.`,
+      });
+    }
+
+    res.status(500).json({ error: "Error interno al actualizar usuario" });
   }
 });
 
-// ✅ Eliminar usuario
+//---------------------------------------------------------------------------------------
+// ------------------------------------ Eliminar usuario --------------------------------
+//---------------------------------------------------------------------------------------
 router.delete("/:id", async (req, res) => {
   try {
     await pool.query("DELETE FROM users WHERE id=$1", [req.params.id]);
     res.json({ message: "Usuario eliminado" });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Error al eliminar usuario:", err.message);
+    res.status(500).json({ error: "Error interno al eliminar usuario" });
   }
 });
 

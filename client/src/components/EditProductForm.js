@@ -29,7 +29,6 @@ function EditProductForm({ product, onUpdate, onCancel }) {
         icon: "warning",
         confirmButtonColor: "#3085d6",
       });
-      return;
     }
 
     try {

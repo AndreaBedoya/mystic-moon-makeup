@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/UserForm.css";
 import StepProgress from "./StepProgress";
 
-function UserForm({ onSubmit, onCancel }) {
+function UserForm({ onSubmit, onCancel, initialData }) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     role: "admin",
-    profile_picture: null, // ✅ archivo
+    profile_picture: null,
     document_id: "",
     phone_number: "",
     birthdate: "",
@@ -18,6 +18,24 @@ function UserForm({ onSubmit, onCancel }) {
 
   const [step, setStep] = useState(1);
   const totalSteps = 3;
+
+  // ✅ Si hay datos iniciales (modo edición), precargarlos
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        username: initialData.username || "",
+        email: initialData.email || "",
+        password: "", // opcional en edición
+        role: initialData.role || "admin",
+        profile_picture: null,
+        document_id: initialData.document_id || "",
+        phone_number: initialData.phone_number || "",
+        birthdate: initialData.birthdate || "",
+        address: initialData.address || "",
+        status: initialData.status || "active",
+      });
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,20 +49,36 @@ function UserForm({ onSubmit, onCancel }) {
   const prevStep = () => setStep(step - 1);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  const formDataToSend = new FormData();
 
-    const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
+  Object.keys(formData).forEach((key) => {
+    if (key === "profile_picture" && !formData.profile_picture) {
+      // -----------------------------------------------------
+      // ------------No enviar nada si no hay archivo---------
+      // -----------------------------------------------------
+      return;
+    }
+    if (key === "password" && !formData.password) {
+      // -----------------------------------------------------
+      // -----------No enviar nada si está vacío--------------
+      // -----------------------------------------------------
+      return;
+    }
+    formDataToSend.append(key, formData[key]);
+  });
 
-    await onSubmit(formDataToSend);
-  };
+  await onSubmit(formDataToSend);
+};
+
+
 
   return (
     <div className="form-container">
       <form className="create-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">Registrar nuevo usuario</h2>
+        <h2 className="form-title">
+          {initialData ? "Editar usuario" : "Registrar nuevo usuario"}
+        </h2>
 
         <div className="progress-wrapper">
           <StepProgress step={step} totalSteps={totalSteps} />
@@ -73,16 +107,19 @@ function UserForm({ onSubmit, onCancel }) {
               />
             </div>
 
-            <div>
-              <label>Contraseña</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {/* Contraseña solo obligatoria en creación */}
+            {!initialData && (
+              <div>
+                <label>Contraseña</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
 
             <div>
               <label>Rol</label>
@@ -189,7 +226,9 @@ function UserForm({ onSubmit, onCancel }) {
               <button type="button" className="btn-secondary" onClick={prevStep}>
                 Anterior
               </button>
-              <button type="submit" className="btn-primary">Registrar</button>
+              <button type="submit" className="btn-primary">
+                {initialData ? "Guardar cambios" : "Registrar"}
+              </button>
             </>
           )}
         </div>

@@ -6,6 +6,9 @@ import "../styles/UserList.css";
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  //---------------------nuevo estado--------------------
+  const [selectedUser, setSelectedUser] = useState(null);
+  //-----------------------------------------------------
 
   const fetchUsers = async () => {
     try {
@@ -21,12 +24,28 @@ function UsersList() {
     fetchUsers();
   }, []);
 
+  //-----------------------------------------------------------------------
+  //-----------------Funcion para crear un usuario-------------------------
+  //-----------------------------------------------------------------------
   const handleCreateUser = async (newUser) => {
     try {
-      await fetch("http://localhost:4000/api/users", {
+      const response = await fetch("http://localhost:4000/api/users", {
         method: "POST",
         body: newUser,
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: "error",
+          title: "Error al crear usuario",
+          text:
+            errorData.error ||
+            `El usuario ya existe y no puede ser registrado nuevamente.`,
+          confirmButtonColor: "#d9534f",
+        });
+        return;
+      }
 
       Swal.fire({
         icon: "success",
@@ -48,28 +67,97 @@ function UsersList() {
     }
   };
 
-  const handleDeleteUser = async (id) => {
+  //-----------------------------------------------------------------------
+  //------------------Funcion para editar un usuario-----------------------
+  //-----------------------------------------------------------------------
+  const handleEditUser = async (id, updatedUser) => {
     try {
-      await fetch(`http://localhost:4000/api/users/${id}`, {
-        method: "DELETE",
+      const response = await fetch(`http://localhost:4000/api/users/${id}`, {
+        method: "PUT",
+        body: updatedUser,
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: "error",
+          title: "Error al actualizar usuario",
+          text: errorData.error || "No se pudo actualizar el usuario.",
+          confirmButtonColor: "#d9534f",
+        });
+        return;
+      }
 
       Swal.fire({
         icon: "success",
-        title: "Usuario eliminado",
-        text: "El usuario ha sido eliminado correctamente.",
+        title: "Usuario actualizado",
+        text: "El usuario se ha actualizado con éxito.",
         confirmButtonColor: "#6c8cff",
       });
 
+      setShowForm(false);
+      setSelectedUser(null);
       fetchUsers();
     } catch (error) {
-      console.error("Error al eliminar usuario", error);
+      console.error("Error al actualizar usuario", error);
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "No se pudo eliminar el usuario.",
+        text: "No se pudo actualizar el usuario.",
         confirmButtonColor: "#d9534f",
       });
+    }
+  };
+
+  //-----------------------------------------------------------------------
+  //------------------Funcion para eliminar un usuario---------------------
+  //-----------------------------------------------------------------------
+  const handleDeleteUser = async (id) => {
+    const result = await Swal.fire({
+      title: "¿Seguro que desea eliminar este usuario?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d9534f",
+      cancelButtonColor: "#6c8cff",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:4000/api/users/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          Swal.fire({
+            icon: "error",
+            title: "Error al eliminar usuario",
+            text: errorData.error || "No se pudo eliminar el usuario.",
+            confirmButtonColor: "#d9534f",
+          });
+          return;
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "Usuario eliminado",
+          text: "El usuario ha sido eliminado correctamente.",
+          confirmButtonColor: "#6c8cff",
+        });
+
+        fetchUsers();
+      } catch (error) {
+        console.error("Error al eliminar usuario", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo eliminar el usuario.",
+          confirmButtonColor: "#d9534f",
+        });
+      }
     }
   };
 
@@ -96,7 +184,17 @@ function UsersList() {
                   <p>Cédula: {user.document_id}</p>
                   <p>Estado: {user.status}</p>
                   <div className="users-view-actions">
-                    <button className="edit-btn">Editar</button>
+                    <button
+                      className="edit-btn"
+                      onClick={() => {
+                        //------------------guardamos el usuario a editar------------------
+                        setSelectedUser(user);
+                        //-----------------------------------------------------------------
+                        setShowForm(true);
+                      }}
+                    >
+                      Editar
+                    </button>
                     <button
                       className="delete-btn"
                       onClick={() => handleDeleteUser(user.id)}
@@ -112,7 +210,12 @@ function UsersList() {
           <div className="create-user">
             <button
               className="create-btn"
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                //---------------limpiar para modo creación-------------
+                setSelectedUser(null);
+                //------------------------------------------------------
+                setShowForm(true);
+              }}
             >
               + Crear nuevo usuario
             </button>
@@ -120,8 +223,18 @@ function UsersList() {
         </>
       ) : (
         <UserForm
-          onSubmit={handleCreateUser}
-          onCancel={() => setShowForm(false)}
+          //-------------------pasamos datos si es edición------------------
+          initialData={selectedUser}
+          //--------------------------------------------------------------
+          onSubmit={(formData) =>
+            selectedUser
+              ? handleEditUser(selectedUser.id, formData)
+              : handleCreateUser(formData)
+          }
+          onCancel={() => {
+            setShowForm(false);
+            setSelectedUser(null);
+          }}
         />
       )}
     </div>
