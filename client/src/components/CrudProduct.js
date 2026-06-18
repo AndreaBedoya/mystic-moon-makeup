@@ -4,7 +4,6 @@ import EditProductForm from "./EditProductForm";
 import ReadProduct from "./ReadProduct"; 
 import EditProductList from "./EditProductList"; 
 import DeleteProductList from "./DeleteProductList"; 
-
 import "../styles/CrudProduct.css";
 
 function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
@@ -13,21 +12,26 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
 
   return (
     <div className="edit-container">
+      {/* Menú principal */}
       {activeCrud === "menu" && (
         <>
           <h2 className="edit-title">Gestionar productos</h2>
           <div className="crud-options">
             <div className="crud-card" onClick={() => setActiveCrud("crear")}>
               <h3>Crear producto</h3>
+              <img src="/images/Ilustracion crear producto.png" alt="Crear producto" className="card-icon" />
             </div>
             <div className="crud-card" onClick={() => setActiveCrud("ver")}>
               <h3>Ver productos</h3>
+              <img src="/images/Ilustracion ver producto.png" alt="Ver productos" className="card-icon" />
             </div>
             <div className="crud-card" onClick={() => setActiveCrud("editar")}>
               <h3>Editar producto</h3>
+              <img src="/images/Ilustracion editar producto.png" alt="Editar producto" className="card-icon" />
             </div>
             <div className="crud-card" onClick={() => setActiveCrud("eliminar")}>
               <h3>Eliminar producto</h3>
+              <img src="/images/Ilustracion eliminar producto.png" alt="Eliminar producto" className="card-icon" />
             </div>
           </div>
         </>
@@ -38,7 +42,6 @@ function CrudProduct({ products = [], onCreate, onUpdate, onDelete }) {
         {activeCrud === "crear" && (
           <CreateProductForm
             onCreate={async (newProduct) => {
-              // 🔹 Solo llamamos a onCreate del Dashboard
               await onCreate(newProduct);
               setActiveCrud("menu");
             }}

@@ -1,6 +1,6 @@
 .categories-view-title {
   font-size: 1.8rem;
-  margin-bottom: 20px;
+  margin: 15px 0;
   text-align: center;
   color: #fff;
   font-family: "Cinzel Decorative", serif;
@@ -8,7 +8,7 @@
 }
 
 .categories-view-box {
-  max-height: 440px;
+  max-height: 430px;
   width: 96%;
   overflow-y: auto;
   padding: 15px;

@@ -1,27 +1,33 @@
 .sidebar {
-  background-image: url('../assets/starsBackground.png');
-  width: 250px;
-  color: #fff;
-  padding: 20px;
+  width: 19%;
+  height: 96vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, #03050d 0%,#050914 50%,#02040b 100%);
+  border-right: 4px solid rgba(123, 97, 255, 0.2);
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.4);
 }
 
-.sidebar-title {
-  font-family: "Cinzel Decorative", cursive;
-  font-size: 1.5rem;
-  margin-bottom: 30%;
-  text-align: center;
-  color: #fff;
+.sidebar-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.sidebar-logo {
+  width: 260px;
+  object-fit: contain;
 }
 
 .sidebar-content {
-  flex: 1;                     /* ocupa todo el alto */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .sidebar-menu,
@@ -31,47 +37,85 @@
   margin: 0;
 }
 
-.sidebar-menu button{
-  width: 94%;
-  margin: 15px 0;
-  cursor: pointer;
-  background-color: rgba(4, 12, 83, 0.384);
-  border: 2px solid #86A9CE;
-  border-radius: 10px;
-  padding: 10px 40px;
-  color: white;
-  font-size: 1.3rem;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  transition: all 0.3s ease;
+.sidebar-menu li,
+.sidebar-bottom li {
+  margin-bottom: 15px;
 }
 
+.sidebar-menu button,
 .sidebar-bottom button {
-  width: 94%;
-  margin: 10px 0;
-  cursor: pointer;
-  background-color: rgba(4, 12, 83, 0.384);
-  border: 2px solid #86A9CE;
-  border-radius: 10px;
-  padding: 10px 40px;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
   color: white;
-  font-size: 1.3rem;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
+  padding: 30px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .sidebar-menu button:hover,
 .sidebar-bottom button:hover {
-  color: #86A9CE;
+  background: rgba(91, 123, 255, 0.12);
+  border: 1px solid rgba(108, 138, 255, 0.4);
+  transform: translateX(6px);
+  box-shadow: 0 0 10px rgba(122, 147, 255, 0.2), 0 0 20px rgba(122, 147, 255, 0.15);
+}
+
+.active {
+  background: linear-gradient( 90deg, rgba(123, 97, 255, 0.4), rgba(78, 140, 255, 0.15)) !important;
+  border: 2px solid rgba(123, 97, 255, 0.5) !important;
+  box-shadow: 0 0 15px rgba(123, 97, 255, 0.4), 0 0 25px rgba(123, 97, 255, 0.2);
 }
 
 .icon {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  min-width: 20px;
 }
+
+.sidebar-divider {
+  height: 1px;
+  margin: 20px 0;
+  background: linear-gradient(to right, transparent,rgba(255, 255, 255, 0.15),transparent);
+}
+
+.sidebar-card {
+  margin: 15px 0;
+  border-radius: 22px;
+  padding: 15px;
+  text-align: center;
+  background: linear-gradient( 135deg, rgba(40, 60, 140, 0.25), rgba(10, 15, 35, 0.9));
+  border: 2px solid rgba(123, 97, 255, 0.2);
+  overflow: hidden;
+}
+
+.sidebar-card p {
+  color: white;
+  font-size: 1rem;
+  font-family: "Cinzel Decorative", serif;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media screen and (max-width: 2800px) {
+  .sidebar-card {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 1560px) {
+  .sidebar-card {
+    display: block !important;
+  }
+}
+
+
+
+
+

@@ -2,37 +2,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
-  padding: 10px;
+  padding: 12px 20px;
+  margin: 15px;
 }
 
 .search-input {
-  padding: 10px 40px;
+  flex: 1;
+  padding: 10px 20px;
   border-radius: 50px;
-  border: 3px solid #fff;
-  background: transparent;
-  margin: 10px 0;
-  width: 80%;
-  font-size: 1.4rem;
+  border:  3px solid rgba(123, 97, 255, 0.2);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 1.2rem;
+  margin-right: 20px;
 }
 
 .search-input::placeholder {
-  color: #fff;
+  color: rgba(255,255,255,0.6);
 }
 
 .topbar-icons {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   align-items: center;
-  margin: 0 20px;
 }
 
 .icon {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .icon:hover {
   color: #6c8cff;
+  transform: scale(1.2);
 }
