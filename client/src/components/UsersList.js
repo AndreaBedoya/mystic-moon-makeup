@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import UserForm from "./UserForm";
+import UserModal from "./modals/UserModal";
 import "../styles/UserList.css";
 
 function UsersList() {
@@ -9,7 +10,13 @@ function UsersList() {
   //---------------------nuevo estado--------------------
   const [selectedUser, setSelectedUser] = useState(null);
   //-----------------------------------------------------
+  const [showModal, setShowModal] = useState(false);
+  const [modalUser, setModalUser] = useState(null);
+  //-----------------------------------------------------
 
+  //-----------------------------------------------------------------------
+  //-------------------Funcion para cargar usuarios------------------------
+  //-----------------------------------------------------------------------
   const fetchUsers = async () => {
     try {
       const res = await fetch("http://localhost:4000/api/users");
@@ -175,13 +182,16 @@ function UsersList() {
                       src={`http://localhost:4000/uploads/${user.profile_picture}`}
                       alt="Foto perfil"
                       className="users-view-img"
+                      //------------------abrir modal al hacer click------------------
+                      onClick={() => {
+                        setModalUser(user);
+                        setShowModal(true);
+                      }}
+                      //----------------------------------------------------------------
                     />
                   )}
                   <h4>{user.username}</h4>
-                  <p>{user.email}</p>
                   <p>Rol: {user.role}</p>
-                  <p>Teléfono: {user.phone_number}</p>
-                  <p>Cédula: {user.document_id}</p>
                   <p>Estado: {user.status}</p>
                   <div className="users-view-actions">
                     <button
@@ -220,12 +230,18 @@ function UsersList() {
               + Crear nuevo usuario
             </button>
           </div>
+
+          {/*------------------renderizar modal------------------*/}
+          {showModal && (
+            <UserModal user={modalUser} onClose={() => setShowModal(false)} />
+          )}
+          {/*----------------------------------------------------*/}
         </>
       ) : (
         <UserForm
           //-------------------pasamos datos si es edición------------------
           initialData={selectedUser}
-          //--------------------------------------------------------------
+          //----------------------------------------------------------------
           onSubmit={(formData) =>
             selectedUser
               ? handleEditUser(selectedUser.id, formData)
