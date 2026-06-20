@@ -1,25 +1,31 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { IconSearch, IconShoppingCart } from '@tabler/icons-react';
+import { IconSearch, IconShoppingCart, IconLogin2 } from '@tabler/icons-react';
 import '../styles/Navbar.css';
 
 function Navbar({ onCartClick }) {
     return (
         <header className="navbar">
             <div className="navbar-left">
-                <img src="/logo.png" alt="Mystic Moon Logo" className="logo-img" />
-                <h1 className="brand-title">MYSTIC MOON <br/><strong>MAKEUP</strong></h1>
+                <img src="/logol.png" alt="Mystic Moon Logo" className="logo-img" />
+                <img src="/mystic moon.png" alt="Mystic Moon Logo" className="nombre-img" />
             </div>
 
             <div className="navbar-right">
                 <div className="icons-row">
                     <IconSearch className="icon" />
-                    {/* ✅ Al hacer clic abre el carrito */}
-                    <IconShoppingCart className="icon" onClick={onCartClick} style={{cursor: "pointer"}} />
-                </div>
+                    
+                    {/* Al hacer clic abre el carrito */}
+                    <IconShoppingCart 
+                        className="icon" 
+                        onClick={onCartClick} 
+                        style={{cursor: "pointer"}} 
+                    />
 
-                <div className="login-row">
-                    <Link to="/login" className="login-link">Iniciar sesión o registrarse</Link>
+                    {/* Al hacer clic lleva al login */}
+                    <Link to="/login">
+                        <IconLogin2 className="icon" style={{cursor: "pointer"}} />
+                    </Link>
                 </div>
             </div>
         </header>

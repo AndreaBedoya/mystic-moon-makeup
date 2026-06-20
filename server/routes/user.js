@@ -5,24 +5,18 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 
-//---------------------------------------------------------------------------------------
-// -------Configuración de multer (carpeta donde se guardan las imágenes) ---------------
-//---------------------------------------------------------------------------------------
-
+// Configuración de multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../uploads")); // carpeta uploads
+    cb(null, path.join(__dirname, "../uploads"));
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // nombre único
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 const upload = multer({ storage });
 
-//---------------------------------------------------------------------------------------
-// ----------------------------- Crear usuario con imagen -------------------------------
-//---------------------------------------------------------------------------------------
+// Crear usuario
 router.post("/", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
@@ -61,22 +55,16 @@ router.post("/", upload.single("profile_picture"), async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     console.error("Error al crear usuario:", err.message);
-    //---------------------------------------------------------------------------------------
-    //-------------Capturamos error de duplicado (código 23505 en PostgreSQL)----------------
-    //---------------------------------------------------------------------------------------
     if (err.code === "23505") {
       return res.status(400).json({
-        error: `El usuario ${req.body.username} ya ha sido registrado anteriormente.`,
+        error: `El usuario o correo ya ha sido registrado anteriormente.`,
       });
     }
-
     res.status(500).json({ error: "Error interno al crear usuario" });
   }
 });
 
-//---------------------------------------------------------------------------------------
-// ------------------------------------- Listar usuarios --------------------------------
-//---------------------------------------------------------------------------------------
+// Listar usuarios
 router.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
@@ -87,9 +75,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//---------------------------------------------------------------------------------------
-// ----------------------------- Editar usuario------------------------------------------
-//---------------------------------------------------------------------------------------
+// Editar usuario
 router.put("/:id", upload.single("profile_picture"), async (req, res) => {
   try {
     const {
@@ -109,9 +95,6 @@ router.put("/:id", upload.single("profile_picture"), async (req, res) => {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    // ---------------------------------------------------------------------------------------
-    // ------Si no hay archivo nuevo, dejamos undefined para conservar la foto anterior ------
-    //----------------------------------------------------------------------------------------
     const profile_picture = req.file ? req.file.filename : undefined;
 
     const result = await pool.query(
@@ -139,20 +122,16 @@ router.put("/:id", upload.single("profile_picture"), async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     console.error("Error al actualizar usuario:", err.message);
-
     if (err.code === "23505") {
       return res.status(400).json({
-        error: `El correo o usuario '${req.body.username}' ya existe y no puede ser duplicado.`,
+        error: `El correo o usuario '${req.body.username}' ya existe.`,
       });
     }
-
     res.status(500).json({ error: "Error interno al actualizar usuario" });
   }
 });
 
-//---------------------------------------------------------------------------------------
-// ------------------------------------ Eliminar usuario --------------------------------
-//---------------------------------------------------------------------------------------
+// Eliminar usuario
 router.delete("/:id", async (req, res) => {
   try {
     await pool.query("DELETE FROM users WHERE id=$1", [req.params.id]);

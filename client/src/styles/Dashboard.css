@@ -25,8 +25,23 @@
   flex: 1;
   color: #fff;
   padding: 10px;
+
 }
 
-.dashboard-content h1 {
+.dashboard-banner{
+  border: 1px solid gray;
+  background: #0d1831;
+  border-radius: 15px;
+  padding: 10px 30px;
+}
+
+.dashboard-banner h1 {
   font-family: "Cinzel Decorative";
+  font-size: 1.4rem;
+}
+
+
+.dashboard-banner p {
+  font-family: "Opens Sans";
+  font-size: 1rem;
 }

@@ -2,7 +2,7 @@
 
 .home {
   overflow-x: hidden; /* ✅ elimina scroll horizontal */
-  background-image: url('../assets/starsBackground.png');
+  background-image: url('../assets/FondoSinEstrellas.png');
   background-size: cover;
   background-position: center;
   min-height: 100vh;

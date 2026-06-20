@@ -3,14 +3,13 @@ import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import CrudProduct from "../components/CrudProduct";
 import Categories from "../components/Categories";
-import UsersList from "../components/UsersList";   // ✅ Import único
+import UsersList from "../components/UsersList";
 import "../styles/Dashboard.css";
 
-function Dashboard() {
+function Dashboard({ user }) {
   const [activeSection, setActiveSection] = useState("menu");
   const [products, setProducts] = useState([]);
 
-  // 🔹 Cargar productos desde el backend
   const fetchProducts = async () => {
     try {
       const res = await fetch("http://localhost:4000/api/products");
@@ -25,20 +24,18 @@ function Dashboard() {
     fetchProducts();
   }, []);
 
-  // 🔹 Crear producto (recibe FormData)
   const handleCreate = async (formData) => {
     try {
       await fetch("http://localhost:4000/api/products", {
         method: "POST",
-        body: formData, // ✅ aquí usamos el FormData
+        body: formData,
       });
-      await fetchProducts(); // refrescar lista
+      await fetchProducts();
     } catch (error) {
       console.error("Error al crear producto", error);
     }
   };
 
-  // 🔹 Editar producto
   const handleUpdate = async (updatedProduct) => {
     try {
       await fetch(`http://localhost:4000/api/products/${updatedProduct.id}`, {
@@ -46,19 +43,18 @@ function Dashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProduct),
       });
-      await fetchProducts(); // refrescar lista
+      await fetchProducts();
     } catch (error) {
       console.error("Error al actualizar producto", error);
     }
   };
 
-  // 🔹 Eliminar producto
   const handleDelete = async (productToDelete) => {
     try {
       await fetch(`http://localhost:4000/api/products/${productToDelete.id}`, {
         method: "DELETE",
       });
-      await fetchProducts(); // refrescar lista
+      await fetchProducts();
     } catch (error) {
       console.error("Error al eliminar producto", error);
     }
@@ -71,10 +67,10 @@ function Dashboard() {
         <Topbar />
         <div className="dashboard-content">
           {activeSection === "menu" && (
-            <>
-              <h1>Panel de administración</h1>
-              <p>Gestiona productos, categorías y usuarios.</p>
-            </>
+            <div className="dashboard-banner">
+              <h1>Hola {user?.username} </h1>
+              <p>Gestiona tu tienda y descubre el poder de tu marca.</p>
+            </div>
           )}
           {activeSection === "productos" && (
             <CrudProduct
@@ -85,7 +81,7 @@ function Dashboard() {
             />
           )}
           {activeSection === "categorias" && <Categories />}
-          {activeSection === "usuarios" && <UsersList />} {/* ✅ sección usuarios */}
+          {activeSection === "usuarios" && <UsersList />}
         </div>
       </div>
     </div>
