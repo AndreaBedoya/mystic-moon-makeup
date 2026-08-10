@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import "../styles/Login.css";
 
 function Login({ onLogin }) {
@@ -19,7 +20,6 @@ function Login({ onLogin }) {
       const user = res.data.user;
       onLogin(user);
 
-      // Validar rol y redirigir
       if (user.role === "admin") {
         navigate("/dashboard");
       } else {
@@ -42,35 +42,57 @@ function Login({ onLogin }) {
         />
       </div>
       <div className="login-right">
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" autoComplete="off" onSubmit={handleSubmit}>
           <h3>Hola de nuevo</h3>
           <p>Inicia sesión para gestionar tu tienda</p>
-          <label>Correo electrónico</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
 
-          <label>Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          {/* Campo email con icono */}
+          <label>Correo electrónico</label>
+          <div className="input-wrapper">
+            <FaEnvelope className="input-icon" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="tu@email.com"
+              autoComplete="off"
+            />
+          </div>
+
+          {/* Campo contraseña con icono y enlace */}
+          <div className="password-label-row">
+            <label>Contraseña</label>
+            <a href="/RecuperarContrasena" className="forgot-link">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+          <div className="input-wrapper">
+            <FaLock className="input-icon" />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              autoComplete="off"
+            />
+          </div>
 
           <button type="submit">Iniciar sesión</button>
+
           <div className="Contenedor-decoracion">
             <img
-            src="/images/Decoracion luna.png"
-            alt="Decoración lunar"
-            className="decorationL"
-          />
+              src="/images/Decoracion luna.png"
+              alt="Decoración lunar"
+              className="decorationL"
+            />
           </div>
-          
 
-          <div className="login-links">
-            <a href="/RecuperarContrasena">¿Olvidaste tu contraseña?</a>
+          {/* Nota informativa */}
+          <div className="login-note">
+            <p>
+              El inicio de sesión está habilitado únicamente para{" "}
+              <strong>administradores</strong>.
+            </p>
           </div>
         </form>
       </div>
