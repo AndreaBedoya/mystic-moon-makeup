@@ -1,5 +1,6 @@
 import React from "react";
-import { IconPhone, IconMail, IconCalendar, IconX } from "@tabler/icons-react";
+import { FaIdCard } from "react-icons/fa"; // ✅ FontAwesome para cédula
+import { IconPhone, IconMail, IconCalendar, IconX } from "@tabler/icons-react"; // ✅ Tabler para los demás
 import "../../styles/UserModal.css";
 
 function UserModal({ user, onClose }) {
@@ -43,7 +44,7 @@ function UserModal({ user, onClose }) {
             />
 
             <div className="info-item">
-              <IconMail size={30} className="info-icon" />
+              <FaIdCard size={30} className="info-icon" />
               <span>
                 <strong>Cédula</strong>
                 <div className="info-left">{user.document_id}</div>
@@ -59,7 +60,7 @@ function UserModal({ user, onClose }) {
             </div>
 
             <div className="info-item">
-              <IconCalendar className="info-icon" />
+              <IconCalendar size={30} className="info-icon" />
               <div className="info-text">
                 <strong>Miembro desde</strong>
                 <div className="info-left">

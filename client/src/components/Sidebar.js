@@ -12,10 +12,10 @@ function Sidebar({ setActiveSection, activeSection }) {
       <div className="sidebar-content">
         {/* Menú principal */}
         <ul className="sidebar-menu">
-          <li><button className={activeSection === "inicio" ? "active" : ""} onClick={() => setActiveSection("inicio")}><FaHome className="icon"/> Inicio</button></li>
-          <li><button className={activeSection === "productos" ? "active" : ""} onClick={() => setActiveSection("productos")}><FaBoxOpen className="icon"/> Productos</button></li>
-          <li><button className={activeSection === "categorias" ? "active" : ""} onClick={() => setActiveSection("categorias")}><FaList className="icon"/> Categorías</button></li>
-          <li><button className={activeSection === "usuarios" ? "active" : ""} onClick={() => setActiveSection("usuarios")}><FaClipboardList className="icon"/> Usuarios</button></li>
+          <li><button className={activeSection === "inicio" ? "active" : ""} onClick={() => setActiveSection("inicio")}><FaHome className="icon-menu"/> Inicio</button></li>
+          <li><button className={activeSection === "productos" ? "active" : ""} onClick={() => setActiveSection("productos")}><FaBoxOpen className="icon-menu"/> Productos</button></li>
+          <li><button className={activeSection === "categorias" ? "active" : ""} onClick={() => setActiveSection("categorias")}><FaList className="icon-menu"/> Categorías</button></li>
+          <li><button className={activeSection === "usuarios" ? "active" : ""} onClick={() => setActiveSection("usuarios")}><FaClipboardList className="icon-menu"/> Usuarios</button></li>
         </ul>
 
         {/* Sección inferior */}
@@ -28,8 +28,8 @@ function Sidebar({ setActiveSection, activeSection }) {
           </div>
 
           <ul className="sidebar-bottom">
-            <li><button className={activeSection === "perfil" ? "active" : ""} onClick={() => setActiveSection("perfil")}><FaUser className="icon"/> Perfil</button></li>
-            <li><button className={activeSection === "salir" ? "active" : ""} onClick={() => setActiveSection("salir")}><FaSignOutAlt className="icon"/> Salir</button></li>
+            <li><button className={activeSection === "perfil" ? "active" : ""} onClick={() => setActiveSection("perfil")}><FaUser className="icon-menu"/> Perfil</button></li>
+            <li><button className={activeSection === "salir" ? "active" : ""} onClick={() => setActiveSection("salir")}><FaSignOutAlt className="icon-menu"/> Salir</button></li>
           </ul>
         </div>
       </div>

@@ -4,6 +4,7 @@ import Topbar from "../components/Topbar";
 import CrudProduct from "../components/CrudProduct";
 import Categories from "../components/Categories";
 import UsersList from "../components/UsersList";
+import Perfil from "../components/Perfil";
 import "../styles/Dashboard.css";
 
 function Dashboard({ user }) {
@@ -82,6 +83,9 @@ function Dashboard({ user }) {
           )}
           {activeSection === "categorias" && <Categories />}
           {activeSection === "usuarios" && <UsersList />}
+
+          {activeSection === "perfil" && <Perfil user={user} />}
+
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@
 }
 
 .sidebar-logo {
-  width: 260px;
+  width: 240px;
   object-fit: contain;
 }
 
@@ -39,7 +39,7 @@
 
 .sidebar-menu li,
 .sidebar-bottom li {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .sidebar-menu button,
@@ -53,7 +53,7 @@
   display: flex;
   align-items: center;
   gap: 25px;
-  padding: 30px;
+  padding: 30px 25px;
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: 600;
@@ -74,8 +74,9 @@
   box-shadow: 0 0 15px rgba(123, 97, 255, 0.4), 0 0 25px rgba(123, 97, 255, 0.2);
 }
 
-.icon {
-  font-size: 1.4rem;
+.icon-menu {
+  width: 30px;
+  height: auto;
   min-width: 20px;
 }
 
