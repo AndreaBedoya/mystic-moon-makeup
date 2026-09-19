@@ -63,16 +63,16 @@
   justify-content: center;    
 }
 
-.login-form h3{
+.login-form h3 {
   font-size: 1.4rem;
   font-family: "Cinzel Decorative";
   text-align: center;
   margin: 0;
 }
 
-.login-form p{
+.login-form p {
   font-size: 1.2rem;
-  font-family: "Opens Sans";
+  font-family: "Open Sans";
   text-align: center;
 }
 
@@ -85,29 +85,68 @@
   color: gray;
 }
 
-/* Inputs */
-.login-form input {
-  padding: 10px;
-  margin: 5px 0 20px 0;
-  border: 3px solid #86A9CE;
-  background: transparent;
+/* Inputs con iconos */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-wrapper input {
+  width: 85%;
+  padding: 10px 10px 10px 40px; /* espacio para el icono */
+  border: 3px solid gray;
   border-radius: 10px;
+  background-color: #040712;
+  color: #ffffff;
   font-family: "Open Sans";
   outline: none;
   transition: box-shadow 0.3s ease;
-  max-width: 90%;
 }
 
-.login-form input:focus {
+.input-wrapper input::placeholder {
+  color: #b0c4de; /* placeholder azul místico */
+}
+
+.input-wrapper input:focus {
   box-shadow: 0 0 8px #836fff;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color:  rgba(138, 43, 226, 0.8);
+  font-size: 1.2rem;
+}
+
+/* Contraseña + enlace */
+.password-label-row {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin: 5px 0;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+  color: rgba(138, 43, 226, 0.8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: #fff;
+  text-decoration:none;
 }
 
 /* Botón */
 .login-form button {
-  align-self: center;        
-  width: 100%;                
+  align-self: center;
+  width: 96%;                
   padding: 12px;
-  margin-top: 20px;
+  margin: 20px 10px 0 0;
   background: linear-gradient(135deg, #4727AF, #141655);
   border: none;
   border-radius: 10px;
@@ -123,15 +162,17 @@
   transform: scale(1.03);
 }
 
-.Contenedor-decoracion{
+/* Decoración */
+.Contenedor-decoracion {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .decorationL {
-  width:80%;
-  margin: 30px 0px;
-  
+  width: 80%;
+  margin: 20px 0 15px;
 }
 
 /* Links normales */
@@ -155,13 +196,14 @@
   text-decoration: underline;
 }
 
+/* Caja inferior */
 .login-box {
   width: 100%;
   max-width: 400px;
   background: #0B0E19;          
   border: 3px solid #86A9CE;   
   border-top: none; 
-  border-radius: 0 0 10px 10px;   /* esquinas inferiores redondeadas */
+  border-radius: 0 0 10px 10px;
   padding: 25px 40px;
   text-align: center;
 }
