@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import "../styles/Login.css";
@@ -62,9 +63,7 @@ function Login({ onLogin }) {
           {/* Campo contraseña con icono y enlace */}
           <div className="password-label-row">
             <label>Contraseña</label>
-            <a href="/RecuperarContrasena" className="forgot-link">
-              ¿Olvidaste tu contraseña?
-            </a>
+            <Link to="/forgot-password" className="forgot-link">¿Olvidaste tu contraseña?</Link>
           </div>
           <div className="input-wrapper">
             <FaLock className="input-icon" />
