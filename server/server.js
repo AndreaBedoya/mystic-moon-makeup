@@ -1,13 +1,15 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 
-// Importar rutas
 const productRoutes = require("./routes/products");
 const categoriesRoutes = require("./routes/categories");
 const userRoutes = require("./routes/user");
-const authRoutes = require("./routes/auth"); 
+const authRoutes = require("./routes/auth");
 // const webhookRoutes = require("./routes/webhook"); // opcional
 
 const app = express();
@@ -29,9 +31,9 @@ app.use("/uploads", express.static(uploadsDir));
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api", authRoutes); // ✅ login en /api/login
+app.use("/api", authRoutes); // ✅ login en /api/login y recuperación en /api/forgot-password, etc.
 
-// ------------------------------------ Ruta base -----------------------------------
+// ------------------------------ Ruta base de prueba -------------------------------
 app.get("/", (req, res) => {
   res.send("Servidor backend funcionando 🚀");
 });
