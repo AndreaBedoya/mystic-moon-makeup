@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage"; // ✅ tu landing
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import ForgotPassword from "./components/ForgotPassword"; // ✅ está en components
+import ForgotPassword from "./components/ForgotPassword";
 import CrudProduct from "./components/CrudProduct";
 import Dashboard from "./pages/Dashboard";
 import { CartProvider } from "./context/CartContext";
@@ -14,9 +15,10 @@ function App() {
     <CartProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ ruta declarada */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/crud-product" element={<CrudProduct />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
         </Routes>

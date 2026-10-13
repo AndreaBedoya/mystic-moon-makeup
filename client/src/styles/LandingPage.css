@@ -1,0 +1,240 @@
+:root {
+  --primary-purple: #6a1b9a;
+  --secondary-pink: #d81b60;
+  --accent-blue: #1e2a78;
+  --light-bg: #f9f9f9;
+  --white: #ffffff;
+  --text-dark: #333;
+}
+
+.landing-container {
+  font-family: Arial, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--light-bg);
+  text-align: center;
+}
+
+/* Encabezado */
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--accent-blue);
+  color: var(--white);
+  padding: 20px;:root {
+  --deep-blue: #1e2a78;
+  --moon-purple: #6a1b9a;
+  --soft-pink: #d81b60;
+  --white: #ffffff;
+  --light-bg: #f9f9f9;
+  --text-dark: #333;
+}
+
+/* Contenedor general */
+.landing-container {
+  font-family: "Poppins", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, var(--deep-blue), var(--moon-purple));
+  color: var(--white);
+}
+
+/* Encabezado con navegación */
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 40px;
+  background-color: var(--deep-blue);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--white);
+}
+
+.nav-links a {
+  margin: 0 15px;
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--soft-pink);
+}
+
+.cta-button {
+  background-color: var(--white);
+  color: var(--accent-blue);
+  border: 2px solid var(--moon-purple);
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.cta-button:hover {
+  background-color: var(--soft-pink);
+  color: var(--white);
+}
+
+/* Hero principal */
+.landing-hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: var(--moon-purple);
+}
+
+.landing-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.landing-hero p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+/* Secciones blancas */
+.section-white {
+  background-color: var(--white);
+  color: var(--text-dark);
+  padding: 60px 20px;
+  margin: 40px auto;
+  max-width: 1000px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Productos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-card {
+  background-color: var(--light-bg);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Promociones */
+.landing-promos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.landing-promos li {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+/* Reseñas */
+.review-card {
+  background: var(--light-bg);
+  margin: 15px auto;
+  padding: 20px;
+  border-radius: 8px;
+  font-style: italic;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+.landing-footer {
+  background-color: var(--deep-blue);
+  color: var(--white);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+.landing-footer a {
+  color: var(--soft-pink);
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  text-decoration: underline;
+}
+
+}
+
+.landing-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.landing-header p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+/* Secciones blancas */
+.landing-about,
+.landing-reviews {
+  padding: 40px 20px;
+  background: var(--white);
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Tarjetas de reseñas */
+.review-card {
+  background: var(--light-bg);
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 6px;
+  font-style: italic;
+}
+
+/* Botón CTA */
+.landing-cta {
+  margin: 40px 0;
+}
+
+.cta-button {
+  background-color: var(--primary-purple);
+  color: var(--white);
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--secondary-pink);
+}
+
+/* Footer */
+.landing-footer {
+  background: var(--light-bg);
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+.landing-footer a {
+  color: var(--primary-purple);
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  text-decoration: underline;
+}
