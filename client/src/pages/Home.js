@@ -9,7 +9,7 @@ import CartSidebar from '../components/CartSidebar';
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Todo");
   const [products, setProducts] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false); // ✅ estado para abrir/cerrar carrito
+  const [isCartOpen, setIsCartOpen] = useState(false); 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,7 +46,7 @@ function Home() {
               description={product.description}
               images={product.images}
               category={product.category}
-              onAddToCart={() => setIsCartOpen(true)} // ✅ abre carrito al agregar
+              onAddToCart={() => setIsCartOpen(true)} 
             />
           ))}
         </div>
